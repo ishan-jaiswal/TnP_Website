@@ -82,10 +82,10 @@ const useStyles = makeStyles((theme) => ({
 
 export default function PrimarySearchAppBar() {
   const classes = useStyles();
-  const [badge,setBadge]=React.useState({notification_badge:0,message_badge:0})
+  const [badge,setBadge]=React.useState({notification_badge:4,message_badge:1})
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
-  const [log,setLog]=React.useState(false)
+  const [redirect,setRedirect]=React.useState({logout:false,profile:false,myaccount:false})
   const isMenuOpen = Boolean(anchorEl);
   const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
   React.useEffect(() => {
@@ -100,7 +100,13 @@ export default function PrimarySearchAppBar() {
     setMobileMoreAnchorEl(null);
   };
   const handleLogout=()=>{
-    setLog(true)
+    setRedirect({logout:true})
+  }
+  const handleProfile=()=>{
+    setRedirect({profile:true})
+  }
+  const handleMyAccount=()=>{
+    setRedirect({myaccount:true})
   }
   const handleMenuClose = () => {
     setAnchorEl(null);
@@ -122,12 +128,22 @@ export default function PrimarySearchAppBar() {
       open={isMenuOpen}
       onClose={handleMenuClose}
     >
-      <MenuItem onClick={handleMenuClose}>Profile</MenuItem>
-      <MenuItem onClick={handleMenuClose}>My account</MenuItem>
+      <MenuItem onClick={handleProfile}>Profile</MenuItem>
+      <MenuItem onClick={handleMyAccount}>My account</MenuItem>
       <MenuItem onClick={handleLogout}>Logout</MenuItem>
-      {log===true &&(
-        <Redirect to={{
+      {redirect.logout===true &&(
+        <Redirect push to={{
           pathname:'/login'          
+        }} />
+      )}
+      {redirect.profile===true &&(
+        <Redirect push to={{
+          pathname:'/profile',          
+        }} />
+      )}
+      {redirect.myaccount===true &&(
+        <Redirect push to={{
+          pathname:'/myaccount',          
         }} />
       )}
     </Menu>

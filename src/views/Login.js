@@ -93,7 +93,7 @@ export default function Login() {
                 <TextField
                 id="outlined-basic"
                 variant="outlined"              
-                type="text"
+                type="email"
                 style={{ marginTop: '4vh' }}
                 value={user.email}
                 onChange={e=>setUser({...user,email:e.target.value})}    
@@ -110,7 +110,7 @@ export default function Login() {
                 <TextField
                 id="outlined-basic"
                 variant="outlined"              
-                type="email"
+                type="password"
                 style={{ marginTop: '4vh' }}
                 value={user.password}
                 onChange={e=>setUser({...user,password:e.target.value})}     
