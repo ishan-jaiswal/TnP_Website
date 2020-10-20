@@ -8,10 +8,10 @@ import InputBase from '@material-ui/core/InputBase';
 import Badge from '@material-ui/core/Badge';
 import MenuItem from '@material-ui/core/MenuItem';
 import Menu from '@material-ui/core/Menu';
-import MenuIcon from '@material-ui/icons/Menu';
+//import MenuIcon from '@material-ui/icons/Menu';
 import SearchIcon from '@material-ui/icons/Search';
 import AccountCircle from '@material-ui/icons/AccountCircle';
-import MailIcon from '@material-ui/icons/Mail';
+// import MailIcon from '@material-ui/icons/Mail';
 import NotificationsIcon from '@material-ui/icons/Notifications';
 import MoreIcon from '@material-ui/icons/MoreVert';
 import { Redirect } from 'react-router-dom';
@@ -82,15 +82,17 @@ const useStyles = makeStyles((theme) => ({
 
 export default function PrimarySearchAppBar() {
   const classes = useStyles();
-  const [badge,setBadge]=React.useState({notification_badge:4,message_badge:1})
+  const [badge,setBadge]=React.useState(1)
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
-  const [redirect,setRedirect]=React.useState({logout:false,profile:false,myaccount:false})
+  const [redirect,setRedirect]=React.useState({logout:false,profile:false,myaccount:false,home:false})
   const isMenuOpen = Boolean(anchorEl);
+  const [search,setSearch]=React.useState('');
   const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
   React.useEffect(() => {
       //here we will have axios call to determine the number of notification and messages
-      //aslo the the actuall notifications and messages      
+      //aslo the the actuall notifications  
+      setBadge(2);
   }, [])
   const handleProfileMenuOpen = (event) => {
     setAnchorEl(event.currentTarget);
@@ -101,6 +103,9 @@ export default function PrimarySearchAppBar() {
   };
   const handleLogout=()=>{
     setRedirect({logout:true})
+  }
+  const handleHome=()=>{    
+    setRedirect({home:true})
   }
   const handleProfile=()=>{
     setRedirect({profile:true})
@@ -160,17 +165,17 @@ export default function PrimarySearchAppBar() {
       open={isMobileMenuOpen}
       onClose={handleMobileMenuClose}
     >
-      <MenuItem>
+      {/* <MenuItem>
         <IconButton aria-label="show new mails" color="inherit">
           <Badge badgeContent={badge.message_badge} color="secondary">
             <MailIcon />
           </Badge>
         </IconButton>
         <p>Messages</p>
-      </MenuItem>
+      </MenuItem> */}
       <MenuItem>
         <IconButton aria-label="show new notifications" color="inherit">
-          <Badge badgeContent={badge.notification_badge} color="secondary">
+          <Badge badgeContent={badge} color="secondary">
             <NotificationsIcon />
           </Badge>
         </IconButton>
@@ -194,22 +199,27 @@ export default function PrimarySearchAppBar() {
     <div className={classes.grow}>
       <AppBar position="static">
         <Toolbar>
-          <IconButton
+          {/* <IconButton
             edge="start"
             className={classes.menuButton}
             color="inherit"
             aria-label="open drawer"
           >
             <MenuIcon />
-          </IconButton>
-          <Typography className={classes.title} variant="h6" noWrap>
+          </IconButton> */}
+          <Typography className={classes.title} onClick={handleHome} variant="h6" noWrap>
             KiiT TnP
           </Typography>
+          {redirect.home===true &&(
+            <Redirect to={{pathname:'/home'}} />
+          )}
           <div className={classes.search}>
             <div className={classes.searchIcon}>
               <SearchIcon />
             </div>
             <InputBase
+              value={search}
+              onChange={e=>setSearch(e.target.value)}
               placeholder="Search…"
               classes={{
                 root: classes.inputRoot,
@@ -220,13 +230,13 @@ export default function PrimarySearchAppBar() {
           </div>
           <div className={classes.grow} />
           <div className={classes.sectionDesktop}>
-            <IconButton aria-label="show new mails" color="inherit">
+            {/* <IconButton aria-label="show new mails" color="inherit">
               <Badge badgeContent={badge.message_badge} color="secondary">
                 <MailIcon />
               </Badge>
-            </IconButton>
+            </IconButton> */}
             <IconButton aria-label="show new notifications" color="inherit">
-              <Badge badgeContent={badge.notification_badge} color="secondary">
+              <Badge badgeContent={badge} color="secondary">
                 <NotificationsIcon />
               </Badge>
             </IconButton>
