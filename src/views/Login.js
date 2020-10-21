@@ -1,6 +1,7 @@
 import React from 'react'
 import { Grid, TextField, Button } from '@material-ui/core'
 import { Redirect } from 'react-router-dom'
+import useLocalStorage from './useLocalStorage';
 import { makeStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography'
 const useStyles = makeStyles({
@@ -58,7 +59,7 @@ const useStyles = makeStyles({
   });
 export default function Login() {
     const classes = useStyles();
-    const [user,setUser]=React.useState({email:'',password:''})
+    const [user,setUser]=useLocalStorage('user',{email:'',password:''})
     const [redirect,setRedirect]=React.useState(false)
     const checkLogin=()=>{
         if (user.email==='1705500@kiit.ac.in' && user.password==='1234')

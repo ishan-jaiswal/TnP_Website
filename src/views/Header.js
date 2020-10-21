@@ -9,6 +9,7 @@ import Badge from '@material-ui/core/Badge';
 import MenuItem from '@material-ui/core/MenuItem';
 import Menu from '@material-ui/core/Menu';
 //import MenuIcon from '@material-ui/icons/Menu';
+import useLocalStorage from './useLocalStorage';
 import SearchIcon from '@material-ui/icons/Search';
 import AccountCircle from '@material-ui/icons/AccountCircle';
 // import MailIcon from '@material-ui/icons/Mail';
@@ -82,7 +83,8 @@ const useStyles = makeStyles((theme) => ({
 
 export default function PrimarySearchAppBar() {
   const classes = useStyles();
-  const [badge,setBadge]=React.useState(1)
+  // eslint-disable-next-line
+  const [badge,setBadge]=useLocalStorage('badge',4)
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
   const [redirect,setRedirect]=React.useState({logout:false,profile:false,myaccount:false,home:false})
@@ -90,10 +92,9 @@ export default function PrimarySearchAppBar() {
   const [search,setSearch]=React.useState('');
   const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
   React.useEffect(() => {
-      //here we will have axios call to determine the number of notification and messages
-      //aslo the the actuall notifications  
-      setBadge(2);
-  }, [])
+      //here we will have axios call to determine the number of notification
+      //aslo the the actuall notifications        
+  }, []);
   const handleProfileMenuOpen = (event) => {
     setAnchorEl(event.currentTarget);
   };
@@ -121,6 +122,11 @@ export default function PrimarySearchAppBar() {
   const handleMobileMenuOpen = (event) => {
     setMobileMoreAnchorEl(event.currentTarget);
   };
+
+  const handleBadgeClick=()=>{
+    console.log('badge');
+    setBadge(0)
+  }
 
   const menuId = 'primary-search-account-menu';
   const renderMenu = (
@@ -173,9 +179,9 @@ export default function PrimarySearchAppBar() {
         </IconButton>
         <p>Messages</p>
       </MenuItem> */}
-      <MenuItem>
-        <IconButton aria-label="show new notifications" color="inherit">
-          <Badge badgeContent={badge} color="secondary">
+      <MenuItem onClick={handleBadgeClick}>
+        <IconButton aria-label="show new notifications" color="inherit"  >
+          <Badge badgeContent={badge} color="secondary"> 
             <NotificationsIcon />
           </Badge>
         </IconButton>
@@ -235,8 +241,8 @@ export default function PrimarySearchAppBar() {
                 <MailIcon />
               </Badge>
             </IconButton> */}
-            <IconButton aria-label="show new notifications" color="inherit">
-              <Badge badgeContent={badge} color="secondary">
+            <IconButton aria-label="show new notifications" color="inherit" onClick={handleBadgeClick}>
+              <Badge badgeContent={badge} color="secondary" >
                 <NotificationsIcon />
               </Badge>
             </IconButton>

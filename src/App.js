@@ -6,7 +6,6 @@ import MyAccount from '../src/views/MyAccount';
 import Home from '../src/views/Home';
 import Welcome from '../src/views/Welcome';
 import './App.css';
-// import Header from '../src/views/Header'
 function App() {
   return (
     <div className="App">
