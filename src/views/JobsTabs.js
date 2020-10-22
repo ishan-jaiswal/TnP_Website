@@ -7,6 +7,8 @@ import Tab from '@material-ui/core/Tab';
 import Typography from '@material-ui/core/Typography';
 import Box from '@material-ui/core/Box';
 import ActiveInactive from './ActiveInactive'
+import AllJobs from './AllJobs'
+import { Grid } from '@material-ui/core';
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -65,10 +67,17 @@ export default function SimpleTabs() {
         </Tabs>
       </AppBar>
       <TabPanel value={value} index={0}>
-        All Jobs
+      <Grid container justify='center' alignItems='center' direction='column'>
+          <Grid item xs={12}>
+            <AllJobs />     
+          </Grid>
+          <Grid item xs={12}>
+            <AllJobs />     
+          </Grid>
+        </Grid>
       </TabPanel>
-      <TabPanel value={value} index={1}>        
-        <ActiveInactive />
+      <TabPanel value={value} index={1}>               
+        <ActiveInactive />                                
       </TabPanel>      
     </div>
   );

@@ -4,6 +4,7 @@ import TextField from '@material-ui/core/TextField';
 import { Button, Grid } from '@material-ui/core';
 import Header from './Header'
 import useLocalStorage from './useLocalStorage';
+import {DropzoneDialog} from 'material-ui-dropzone'
 const useStyles = makeStyles((theme) => ({
   root: {
     '& > *': {
@@ -15,9 +16,17 @@ export default function Profile() {
     const classes = useStyles();
     const [details,setDetails]=useLocalStorage('details',{first:'Ishan',last:'Jaiswal',phone:7059078173,alt_email:'devhjaiswal@gmail.com',class_10_per:84.4,class_10_year:2015,class_12_per:92,class_12_year:2017,backlogs:0,pass_year:2021,cgpa:9.15})
     const [user]=useLocalStorage('user',{email:'',password:''})
+    const [files,setFiles]=React.useState([])
+    const [opencv,setOpencv]=React.useState(false)
     const handleSubmit=()=>{
-      console.log(details);
+      console.log(files);
     }
+    const handleUploadOpen=()=>{
+      setOpencv(true)
+    }
+    const handleUploadClose=()=>{
+      setOpencv(false)
+    }    
     return (
         <div>         
             <Grid container
@@ -57,7 +66,16 @@ export default function Profile() {
                     <TextField id='passing_year' value={details.pass_year} onChange={e=>setDetails({...details,pass_year:parseInt(e.target.value)})} label='Passing Year' variant='outlined' />
                   </form>
                 </Grid>
-                <Grid item><Button onClick={handleSubmit} variant='contained'>Save Changes</Button></Grid>
+                <Grid item xs={12} ><Button onClick={handleUploadOpen} variant='contained'>Upload Resume</Button></Grid>
+                <Grid item style={{marginTop:'2vh'}}><Button onClick={handleSubmit} variant='contained'>Save Changes</Button></Grid>
+                <DropzoneDialog
+                    open={opencv}
+                    onSave={e=>{setFiles(e);setOpencv(false)}}
+                    acceptedFiles={['application/pdf']}
+                    showPreviews={true}
+                    maxFileSize={5000000}
+                    onClose={handleUploadClose}
+                />
             </Grid>
         </div>
     )

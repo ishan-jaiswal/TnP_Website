@@ -1,6 +1,6 @@
 import React from 'react'
 import { Grid, TextField, Button } from '@material-ui/core'
-import { Redirect } from 'react-router-dom'
+import { Link, Redirect } from 'react-router-dom'
 import useLocalStorage from './useLocalStorage';
 import { makeStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography'
@@ -60,12 +60,16 @@ const useStyles = makeStyles({
 export default function Login() {
     const classes = useStyles();
     const [user,setUser]=useLocalStorage('user',{email:'',password:''})
-    const [redirect,setRedirect]=React.useState(false)
+    const [redirect,setRedirect]=React.useState({login:false,forget:false})
     const checkLogin=()=>{
         if (user.email==='1705500@kiit.ac.in' && user.password==='1234')
         {
-            setRedirect(true)
+            setRedirect({...redirect,login:true})
         }
+    }
+    const handleForgetPassword=()=>{
+      console.log('forget');
+      setRedirect({...redirect,forget:true})
     }
     return (
         <div>
@@ -131,9 +135,13 @@ export default function Login() {
                 >
                 Login
                 </Button>
-                {redirect===true && (
-                            <Redirect to={{pathname:'/home',state:{email:user.email}}}/>
+                <Link style={{marginTop:'2vh'}} onClick={handleForgetPassword}>Forget Password?</Link>
+                {redirect.login===true && (
+                            <Redirect to={{pathname:'/home'}}/>
                         )}
+                {redirect.forget===true &&(
+                  <Redirect to={{pathname:'/forget'}} />
+                )}
             </Grid>
             </Grid>
             </Grid>
