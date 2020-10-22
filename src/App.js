@@ -6,6 +6,7 @@ import MyAccount from '../src/views/MyAccount';
 import Home from '../src/views/Home';
 import Welcome from '../src/views/Welcome';
 import './App.css';
+import Job from './views/Job'
 import Forget from './views/Forget';
 function App() {
   return (
@@ -16,6 +17,7 @@ function App() {
           <Route path='/login' component={Login} />
           <Route path='/forget' component={Forget} />
           <Route path='/home' component={Home} />   
+          <Route path='/job' component={Job}/>
           <Route path='/profile' component={Profile} />
           <Route path='/myaccount' component={MyAccount} />
         </Switch>
